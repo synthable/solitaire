@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useRef, useState, memo } from 'react';
+import { useReducer, useEffect, useRef, useState } from 'react';
 import './App.css';
 
 /* ─── Constants ─── */
@@ -302,7 +302,7 @@ function columnHeight(column) {
 }
 
 /* ─── Card component ─── */
-const Card = memo(function Card({ card, style, isSelected, onClick, onDoubleClick }) {
+const Card = function Card({ card, style, isSelected, onClick, onDoubleClick }) {
   const prevFaceUp = useRef(card.faceUp);
   const [flipping, setFlipping] = useState(false);
   const [landing, setLanding] = useState(card.faceUp);
@@ -357,7 +357,7 @@ const Card = memo(function Card({ card, style, isSelected, onClick, onDoubleClic
       </div>
     </div>
   );
-});
+}
 
 function EmptySlot({ className, label, onClick }) {
   return (
