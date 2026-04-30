@@ -1,16 +1,65 @@
-# React + Vite
+# Solitaire
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A fully playable **Klondike Solitaire** game built as a React single-page app, powered by Vite.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Draw-1 stock with unlimited recycles (no penalty)
+- Undo any number of moves
+- Auto-move via double-click (foundation first, then tableau)
+- Move counter and elapsed-time HUD
+- Win overlay with final stats
+- Animated card flips and landings
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js ≥ 20.19.0
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Install & Run
+
+```bash
+npm install
+npm run dev
+```
+
+Open the local URL shown in your terminal (default: `http://localhost:5173`).
+
+### Build for Production
+
+```bash
+npm run build
+npm run preview
+```
+
+## How to Play
+
+### Objective
+
+Move all 52 cards to the four **foundation** piles (top-right), one per suit, built up from Ace to King.
+
+### Controls
+
+| Action | How |
+|---|---|
+| Draw a card from the stock | Click the face-down stock pile (top-left) |
+| Recycle waste back to stock | Click the empty stock slot when the stock is empty |
+| Select a card / stack | Click a face-up card in the waste or tableau |
+| Place selected card(s) | Click the destination foundation or tableau column |
+| Deselect | Click the selected card again |
+| Auto-move (foundation or tableau) | Double-click a face-up card |
+| Undo last move | Click **↩ UNDO** in the header |
+| Start a new game | Click **NEW GAME** in the header |
+
+### Rules
+
+- **Tableau**: Build columns in descending rank, alternating colours (red / black). Only a King may be placed on an empty column.
+- **Foundation**: Build each suit pile from Ace up to King.
+- **Stock / Waste**: Draw one card at a time; the waste top card is always playable.
+- **Stack moves**: Any valid face-up run in a tableau column can be moved as a group.
+
+## License
+
+[MIT](LICENSE)
+

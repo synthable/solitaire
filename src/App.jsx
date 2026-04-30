@@ -178,7 +178,7 @@ function reducer(state, action) {
       const { pile: srcPile, pileIndex: srcIdx, cardIndex: srcCardIdx } = state.selected;
 
       if (srcPile === 'waste') {
-        newWaste.pop();
+        newWaste.splice(srcCardIdx, 1);
       } else {
         newTableau[srcIdx].splice(srcCardIdx);
         autoFlip(newTableau[srcIdx]);
@@ -208,7 +208,7 @@ function reducer(state, action) {
       const { pile, pileIndex, cardIndex } = action;
       let card;
       if (pile === 'waste') {
-        card = state.waste[state.waste.length - 1];
+        card = state.waste[cardIndex];
         if (!card) return state;
       } else if (pile === 'tableau') {
         card = state.tableau[pileIndex]?.[cardIndex];
@@ -225,7 +225,7 @@ function reducer(state, action) {
 
       const removeFromSource = () => {
         if (pile === 'waste') {
-          newWaste.pop();
+          newWaste.splice(cardIndex, 1);
         } else {
           newTableau[pileIndex].splice(cardIndex);
           autoFlip(newTableau[pileIndex]);
@@ -525,7 +525,7 @@ export default function App() {
             {state.stock.length > 0 ? (
               <Card card={{ suit: 'S', rank: 1, faceUp: false }} />
             ) : (
-              <EmptySlot label="↺" onClick={onStockClick} />
+              <EmptySlot label="↺" />
             )}
           </div>
 
@@ -558,14 +558,12 @@ export default function App() {
                   <Card
                     card={topCard}
                     isSelected={false}
-                    onClick={() => onFoundationClick(i)}
                     onDoubleClick={() => {}}
                   />
                 ) : (
                   <EmptySlot
                     className={vd ? 'valid-drop' : ''}
                     label={SUIT_SYM[SUITS[i]]}
-                    onClick={() => onFoundationClick(i)}
                   />
                 )}
               </div>
