@@ -1,8 +1,8 @@
 import { useReducer, useEffect, useRef, useState } from 'react';
 import './App.css';
+import { SUITS, createDeck, shuffle } from './gameLogic.js';
 
 /* ─── Constants ─── */
-const SUITS = ['S', 'H', 'D', 'C'];
 const SUIT_SYM = { S: '♠', H: '♥', D: '♦', C: '♣' };
 const RANK_STR = { 1: 'A', 11: 'J', 12: 'Q', 13: 'K' };
 const rl = (r) => RANK_STR[r] ?? String(r);
@@ -15,21 +15,6 @@ const FD_OFF = 18; /* face-down card cascade offset */
 const FU_OFF = 28; /* face-up card cascade offset   */
 
 /* ─── Deck utilities ─── */
-function createDeck() {
-  return SUITS.flatMap((suit) =>
-    Array.from({ length: 13 }, (_, i) => ({ suit, rank: i + 1, faceUp: false }))
-  );
-}
-
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 function deal() {
   const deck = shuffle(createDeck());
   let idx = 0;
