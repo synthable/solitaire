@@ -285,21 +285,7 @@ function reducer(state, action) {
   }
 }
 
-/* ─── Layout helpers ─── */
-function cardTopOffset(column, index) {
-  let top = 0;
-  for (let i = 0; i < index; i++) {
-    top += column[i].faceUp ? FU_OFF : FD_OFF;
-  }
-  return top;
-}
 
-function columnHeight(column) {
-  if (!column.length) return CH;
-  return (
-    column.slice(0, -1).reduce((h, c) => h + (c.faceUp ? FU_OFF : FD_OFF), 0) + CH
-  );
-}
 
 /* ─── Card component ─── */
 const Card = function Card({ card, style, isSelected, onClick, onDoubleClick }) {
@@ -379,7 +365,14 @@ function TableauColumn({
   onCardDblClick,
   onEmptyClick,
 }) {
-  const height = columnHeight(col);
+  const offsets = [];
+  let currentTop = 0;
+  for (let i = 0; i < col.length; i++) {
+    offsets.push(currentTop);
+    currentTop += col[i].faceUp ? FU_OFF : FD_OFF;
+  }
+  const height = col.length === 0 ? CH : offsets[offsets.length - 1] + CH;
+
   return (
     <div
       className={`tableau-col${validDrop ? ' valid-drop' : ''}`}
@@ -389,7 +382,7 @@ function TableauColumn({
         <EmptySlot className={validDrop ? 'valid-drop' : ''} onClick={onEmptyClick} />
       ) : (
         col.map((card, i) => {
-          const top = cardTopOffset(col, i);
+          const top = offsets[i];
           const style = { position: 'absolute', top, left: 0, zIndex: i + 1 };
           const isSel = selStack != null && i >= selStack.from && i <= selStack.to;
           return (
