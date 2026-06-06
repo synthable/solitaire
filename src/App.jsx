@@ -90,7 +90,7 @@ function getSelectedCards(state) {
 function takeSnapshot(state) {
   // eslint-disable-next-line no-unused-vars
   const { history, ...rest } = state;
-  return JSON.parse(JSON.stringify(rest));
+  return structuredClone(rest);
 }
 
 function autoFlip(col) {
